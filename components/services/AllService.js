@@ -1,23 +1,12 @@
 import Image from "next/image";
 import Team1 from "@/public/t1.jpg";
 import Link from "next/link";
+import { getCategory } from "@/dynamicdata/apihandle";
 
-const AllService = async ({ c }) => {
-  // async function getCategory() {
-  //   const res = await fetch("http://localhost:5000/api/get-category");
+const AllService = async () => {
+  const categories = await getCategory();
 
-  //   if (!res.ok) {
-  //     throw new Error("Failed to fetch categories");
-  //   }
-
-  //   const data = await res.json();
-
-  //   return JSON.stringify(data.categorys);
-  // }
-
-  // console.log("all categorylist", getCategory());
-
-  const categories = [];
+  const categorys = categories.categorys;
 
   return (
     <section className="bg-white py-24 px-10 md:px-0">
@@ -26,7 +15,7 @@ const AllService = async ({ c }) => {
           {/* Grid Container */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8 sm:gap-6">
             {/* Repeated Category Block */}
-            {categories.length > 0 ? (
+            {categorys?.length > 0 ? (
               categories.map((category, index) => (
                 <div
                   key={index}
@@ -52,7 +41,7 @@ const AllService = async ({ c }) => {
                 </div>
               ))
             ) : (
-              <p>No categories available.</p> // Fallback text if no categories
+              <p>No categories available.</p>
             )}
           </div>
         </div>
