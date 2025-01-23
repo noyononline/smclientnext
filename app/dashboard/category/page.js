@@ -97,7 +97,7 @@ const Category = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {categorys.map((category, i) => (
+                  {categorys?.map((category, i) => (
                     <TableRow key={category.id} className="">
                       <TableCell className="font-medium text-slate-950">
                         {i + 1}
