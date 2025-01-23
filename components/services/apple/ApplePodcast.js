@@ -1,4 +1,3 @@
-"use client";
 import {
   Table,
   TableBody,
@@ -16,67 +15,19 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { MdVisibility } from "react-icons/md";
+import PlaceOrderButton from "./PlaceOrderButton";
+import { getAppleService } from "@/dynamicdata/apihandle";
+import { use } from "react";
 
 const ApplePodcastSer = () => {
-  const invoices = [
-    {
-      id: "1",
-      service: "downloads 2k",
-      paymentStatus: "20",
-      delivery: "2 days",
-      place: "place order",
-      action: "view",
-    },
-    {
-      id: "2",
-      service: "downloads 2k",
-      paymentStatus: "20",
-      delivery: "2 days",
-      place: "place order",
-      action: "view",
-    },
-    {
-      id: "3",
-      service: "downloads 2k",
-      paymentStatus: "20",
-      delivery: "2 days",
-      place: "place order",
-      action: "view",
-    },
-    {
-      id: "4",
-      service: "downloads 2k",
-      paymentStatus: "20",
-      delivery: "2 days",
-      place: "place order",
-      action: "view",
-    },
-    {
-      id: "5",
-      service: "downloads 2k",
-      paymentStatus: "20",
-      delivery: "2 days",
-      place: "place order",
-      action: "view",
-    },
-    {
-      id: "6",
-      service: "downloads 2k",
-      paymentStatus: "20",
-      delivery: "2 days",
-      place: "place order",
-      action: "view",
-    },
-    {
-      id: "7",
-      service:
-        "📺 Downloads [All Episodes]  Downloads [All Episodes]  Downloads [All Episodes]",
-      paymentStatus: "20",
-      delivery: "2 days",
-      place: "place order",
-      action: "view",
-    },
-  ];
+  const applePodcast = use(getAppleService());
+
+  const applepodcaster = applePodcast.allService;
+
+  const handlePlaceOrder = async (applepod) => {
+    console.log(applepod);
+  };
+
   return (
     <>
       <section className="py-24 bg-slate-50">
@@ -96,6 +47,12 @@ const ApplePodcastSer = () => {
                     Price
                   </TableHead>
                   <TableHead className="text-center text-slate-900 font-bold">
+                    minimum
+                  </TableHead>
+                  <TableHead className="text-center text-slate-900 font-bold">
+                    maximum
+                  </TableHead>
+                  <TableHead className="text-center text-slate-900 font-bold">
                     Delivery Time
                   </TableHead>
                   <TableHead className="text-center text-slate-900 font-bold">
@@ -107,28 +64,46 @@ const ApplePodcastSer = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {invoices.map((invoice) => (
-                  <TableRow key={invoice.id} className="">
+                {applepodcaster.map((applepod, ap) => (
+                  <TableRow key={applepod._id} className="">
                     <TableCell className="font-medium text-slate-950">
-                      {invoice.id}
+                      {ap + 1}
                     </TableCell>
                     <TableCell className="font-medium text-slate-950 max-w-[300px]">
-                      {invoice.service}
+                      {applepod.title}
                     </TableCell>
                     <TableCell className="text-center text-slate-950">
                       <span className="px-6 py-2 shadow-md rounded-md">
-                        ${invoice.paymentStatus}
+                        ${applepod.price}
+                      </span>
+                    </TableCell>
+                    <TableCell className="text-center text-slate-950">
+                      <span className="px-6 py-2 shadow-md rounded-md">
+                        {applepod.minimum}
+                      </span>
+                    </TableCell>
+                    <TableCell className="text-center text-slate-950">
+                      <span className="px-6 py-2 shadow-md rounded-md">
+                        {applepod.maximum}
                       </span>
                     </TableCell>
                     <TableCell className="text-center text-white flex flex-wrap justify-center items-center">
                       <span className="px-6 py-2 shadow-md rounded-md bg-orange-500">
-                        {invoice.delivery}
+                        {applepod.delivery} days
                       </span>
                     </TableCell>
                     <TableCell className="text-center text-white ">
-                      <span className="px-6 py-3 shadow-md rounded-md cursor-pointer bg-indigo-500 flex flex-wrap justify-center items-center">
+                      {/* <span
+                        onClick={() => handlePlaceOrder(applepod)}
+                        className="px-6 py-3 shadow-md rounded-md cursor-pointer bg-indigo-500 flex flex-wrap justify-center items-center"
+                      >
                         Place Order
-                      </span>
+                      </span> */}
+
+                      <PlaceOrderButton
+                        name={"Place Order"}
+                        applepod={applepod}
+                      />
                     </TableCell>
                     <TableCell className="text-right">
                       <DialogTrigger>

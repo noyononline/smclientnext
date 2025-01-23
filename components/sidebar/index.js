@@ -52,14 +52,6 @@ const Sidebar = ({ setShowSidebar, showSidebar }) => {
     },
 
     {
-      id: 5,
-      title: "All Service",
-      icon: <RiProductHuntLine />,
-      role: "admin",
-      path: "/dashboard/all-service",
-    },
-
-    {
       id: 7,
       title: "Chat Support",
       icon: <FiMessageSquare />,

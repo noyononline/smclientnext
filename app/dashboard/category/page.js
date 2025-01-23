@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,8 +11,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { MdVisibility } from "react-icons/md";
+import { getCategory } from "@/dynamicdata/apihandle";
+import { use } from "react";
 
 const Category = () => {
+  const categories = use(getCategory());
+
+  const categorys = categories.categorys;
+
   const invoices = [
     {
       id: "1",
@@ -92,28 +97,33 @@ const Category = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {invoices.map((invoice) => (
-                    <TableRow key={invoice.id} className="">
+                  {categorys.map((category, i) => (
+                    <TableRow key={category.id} className="">
                       <TableCell className="font-medium text-slate-950">
-                        {invoice.id}
+                        {i + 1}
                       </TableCell>
                       <TableCell className="font-medium text-slate-950 ">
-                        {invoice.service}
+                        {category.name}
                       </TableCell>
                       <TableCell className="text-center items-center text-slate-950">
                         <Image
-                          className="w-[45px] items-center h-[45px]"
-                          src={cate}
-                          alt="SMM"
+                          className="items-center"
+                          src={category.image}
+                          alt={category.name}
+                          width={60}
+                          height={50}
+                          priority
                         />
                       </TableCell>
 
                       <TableCell className="text-right">
-                        <p className="flex flex-row justify-end items-center">
-                          <span className="p-3 bg-violet-700 shadow-sm rounded-lg cursor-pointer">
-                            <MdVisibility className="text-2xl text-indigo-50 z-50" />
-                          </span>
-                        </p>
+                        <Link href={`/services`}>
+                          <p className="flex flex-row justify-end items-center">
+                            <span className="p-3 bg-violet-700 shadow-sm rounded-lg cursor-pointer">
+                              <MdVisibility className="text-2xl text-indigo-50 z-50" />
+                            </span>
+                          </p>
+                        </Link>
                       </TableCell>
                     </TableRow>
                   ))}

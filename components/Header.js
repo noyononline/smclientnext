@@ -1,39 +1,36 @@
 "use client";
-
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Image from "next/image";
 import { HiMenuAlt3, HiX } from "react-icons/hi"; // For hamburger menu icon
 import Link from "next/link"; // Next.js Link component
-import logo2 from "@/public/logo-2.png"; // Make sure the image path is correct
+import logo2 from "@/public/logo-2.png"; // Ensure this is the correct path
 import { usePathname } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useAppDispatch, useAppSelector } from "@/lib/store/hooks/hooks";
+import { useAppSelector } from "@/lib/store/hooks/hooks";
 
 const Header = ({ accountClass = "" }) => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // New state to toggle mobile menu
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false); // Mobile menu state
+  const [isScrolled, setIsScrolled] = React.useState(false); // Scroll state for header
 
-  const dispatch = useAppDispatch();
   const { userInfo } = useAppSelector((state) => state.auth);
+  const pathname = usePathname();
 
-  useEffect(() => {
-    function handleScroll() {
-      if (window.scrollY > 0) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+  // Handle scroll event without useEffect
+  const handleScroll = () => {
+    if (window.scrollY > 0) {
+      setIsScrolled(true);
+    } else {
+      setIsScrolled(false);
     }
+  };
 
+  // Add scroll event listener on mount and cleanup on unmount
+  React.useLayoutEffect(() => {
     window.addEventListener("scroll", handleScroll);
-
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
-  const pathname = usePathname(); // Using window.location for pathname in Next.js
-  console.log("path", pathname);
 
   return (
     <header className="header w-full p-0">
@@ -57,7 +54,7 @@ const Header = ({ accountClass = "" }) => {
             </div>
 
             {/* Desktop menu */}
-            <nav className="p-0 lg:flex  hidden">
+            <nav className="p-0 lg:flex hidden">
               <ul className="text-left flex mx-auto my-0 p-0">
                 <li className="text-center capitalize p-0 m-0">
                   <Link

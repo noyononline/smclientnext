@@ -6,6 +6,10 @@ import { useAppSelector } from "@/lib/store/hooks/hooks";
 
 const ChatSupport = () => {
   const { userInfo } = useAppSelector((state) => state.auth);
+
+  if (!userInfo || !userInfo._id) {
+    return <div>Loading...</div>; // Handle case when userInfo is not available
+  }
   return (
     <div className="px-2 lg:px-7 py-5">
       <div className="w-full bg-white shadow-md px-4 py-4 rounded-md h-[calc(100vh-140px)]">
@@ -31,7 +35,7 @@ const ChatSupport = () => {
             <div className="py-4">
               <div className="bg-slate-100 h-[calc(100vh-290px)] rounded-md p-3 overflow-y-auto">
                 {[1, 2, 3].map((m, i) => {
-                  if (userInfo._id !== m.senderId) {
+                  if (userInfo?._id !== m.senderId) {
                     return (
                       <div
                         key={i}

@@ -1,5 +1,3 @@
-"use client";
-
 import Header from "@/components/Header";
 import UniBanner from "@/components/uriBanner/UriBanner";
 import AllService from "@/components/services/AllService";
